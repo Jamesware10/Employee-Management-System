@@ -1,0 +1,58 @@
+﻿@using Microsoft.AspNet.Identity
+
+
+@Styles.Render("~/Content/css")
+@Scripts.Render("~/Scripts/js")
+
+<head>
+    <link href="~/Content\font-awesome.css" rel="stylesheet" />
+    
+</head>
+
+
+@if (Request.IsAuthenticated) {
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" })) {
+        @Html.AntiForgeryToken()
+
+
+        <ul class="nav navbar-nav navbar-right">
+
+            <li class="nav-account-info-group dropdown">
+
+                @*@Html.ActionLink(User.Identity.GetUserName(), "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })*@
+
+
+                <a href="#" class="dropdown-btn">
+
+                    <img src="~/Content/Images/admin_user_icon_male-shamrock.png" alt="Alternate Text" />
+                    @Html.Name(User.Identity.GetUserName())
+                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+
+                </a>
+                
+
+                <asp:DropDownList ID="DropDownList1" runat="server" CssClass="form-control" class="dropdown-content">
+                    <asp:ListItem class="asp-list-item"><a href="@Url.Action("Index", "Manage", null)">Manage</a></asp:ListItem>
+                    <asp:ListItem class="asp-list-item"><a href="#">Item2</a></asp:ListItem>
+                    <asp:ListItem class="asp-list-item"><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></asp:ListItem>
+                </asp:DropDownList>
+
+
+                <ul class="dropdown-menu">
+                    <a href="#">Link 1</a>
+                    <a href="#">Link 2</a>
+                    <a href="#">Link 3</a>
+                </ul>
+
+            </li>
+
+
+            @*<li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>*@
+        </ul>
+    }
+} else {
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+    </ul>
+}
